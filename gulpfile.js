@@ -30,11 +30,17 @@ function compress() {
 
 // Watches for changes
 function watchTask() {
-    watch('./assets/sass/**/*.scss', css);
-    watch('./assets/js/**/*.js')
-        .on('change', browserSync.reload);
-    watch('./**/*.php')
-    .on('change', browserSync.reload);
+    watch('./assets/src/sass/**/*.scss', css);
+    watch('./assets/src/js/**/*.js', js)
+        .on('change', () => {
+            console.log('Javascript changed');
+            browserSync.reload();
+        });
+    watch(['./**/*.php', '!./**/index.asset.php'])
+    .on('change', () => {
+        console.log('PHP changed');
+        browserSync.reload();
+    });
 };
 
 // Opens up the browser
